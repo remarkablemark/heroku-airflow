@@ -95,7 +95,12 @@ airflow users create -e EMAIL -f FIRSTNAME -l LASTNAME [-p PASSWORD] -r ROLE [--
 Example to create an admin user:
 
 ```sh
-airflow users create –username admin –firstname Peter –lastname Parker –role Admin –email admin@example.com
+airflow users create \
+  --username admin \
+  --firstname FIRST_NAME \
+  --lastname LAST_NAME \
+  --role Admin \
+  --email admin@example.org
 ```
 
 ## Resources
