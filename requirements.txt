@@ -1,0 +1,1 @@
+apache-airflow[celery,postgres,redis]==2.3.3
