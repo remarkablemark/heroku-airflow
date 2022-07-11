@@ -31,11 +31,15 @@
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "free"
+      "size": "standard-2x"
     },
     "worker": {
       "quantity": 1,
-      "size": "free"
+      "size": "hobby"
+    },
+    "scheduler": {
+      "quantity": 1,
+      "size": "hobby"
     }
   },
   "scripts": {
