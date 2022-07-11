@@ -33,6 +33,8 @@ pip3 install -r requirements.txt
 
 ## Env
 
+Ensure the config vars from [app.json](app.json) are set in the Heroku app.
+
 Generate a `AIRFLOW__CORE__FERNET_KEY`:
 
 ```sh
@@ -65,16 +67,32 @@ Run an all-in-one copy of airflow locally:
 airflow standalone
 ```
 
+## Database
+
+If you're seeing the error in the Heroku logs:
+
+```
+ERROR: You need to initialize the database. Please run `airflow db init`.
+```
+
+Then verify the config looks good before initializing the database in your Heroku app:
+
+```sh
+heroku run bash
+airflow info
+airflow db init
+```
+
 ## User
 
-Create user in Heroku app:
+Create a user in Heroku app:
 
 ```sh
 heroku run bash
 airflow users create -e EMAIL -f FIRSTNAME -l LASTNAME [-p PASSWORD] -r ROLE [--use-random-password] -u USERNAME
 ```
 
-Example to create admin user:
+Example to create an admin user:
 
 ```sh
 airflow users create –username admin –firstname Peter –lastname Parker –role Admin –email admin@example.com
