@@ -1,0 +1,44 @@
+{
+  "addons": [
+    "heroku-postgresql",
+    "librato",
+    "mailgun",
+    "papertrail",
+    "rediscloud"
+  ],
+  "env": {
+    "AIRFLOW__CELERY__WORKER_CONCURRENCY": {
+      "description": "Concurrency used when starting workers",
+      "value": 2
+    },
+    "AIRFLOW__CORE__FERNET_KEY": {
+      "description": "Fernet key to encrypt passwords",
+      "required": true
+    },
+    "AIRFLOW_HOME": {
+      "description": "Home folder for airflow",
+      "required": true,
+      "value": "/app"
+    },
+    "AIRFLOW__WEBSERVER__BASE_URL": {
+      "description": "Base url of your website"
+    },
+    "AIRFLOW__WEBSERVER__SECRET_KEY": {
+      "description": "Secret key used to run your flask app",
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "scripts": {
+    "postdeploy": "airflow db init"
+  }
+}
