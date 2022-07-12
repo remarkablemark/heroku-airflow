@@ -33,7 +33,7 @@ pip3 install -r requirements.txt
 
 ## Run
 
-Run an all-in-one copy of airflow locally:
+Run an all-in-one copy of Airflow locally:
 
 ```sh
 airflow standalone
