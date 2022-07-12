@@ -6,10 +6,10 @@ Deploy [Airflow](https://airflow.apache.org/) to [Heroku](https://www.heroku.com
 
 ## Stack
 
-- Celery
-- Mailgun
-- PostgreSQL
-- Redis
+- [Celery](https://docs.celeryq.dev/)
+- [Mailgun](https://elements.heroku.com/addons/mailgun)
+- [Postgres](https://elements.heroku.com/addons/heroku-postgresql)
+- [Redis](https://elements.heroku.com/addons/rediscloud)
 
 ## Install
 
@@ -31,9 +31,25 @@ Install the dependencies:
 pip3 install -r requirements.txt
 ```
 
+## Run
+
+Run an all-in-one copy of airflow locally:
+
+```sh
+airflow standalone
+```
+
 ## Env
 
-Ensure the config vars from [app.json](app.json) are set in the Heroku app.
+Ensure the config vars from [app.json](app.json) are set in the Heroku app:
+
+```sh
+AIRFLOW__CELERY__WORKER_CONCURRENCY=2
+AIRFLOW__CORE__FERNET_KEY=
+AIRFLOW_HOME=/app
+AIRFLOW__WEBSERVER__BASE_URL=
+AIRFLOW__WEBSERVER__SECRET_KEY=
+```
 
 Generate a `AIRFLOW__CORE__FERNET_KEY`:
 
@@ -41,7 +57,7 @@ Generate a `AIRFLOW__CORE__FERNET_KEY`:
 python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-Set in Heroku app:
+Set `AIRFLOW__CORE__FERNET_KEY` in Heroku app:
 
 ```sh
 heroku config:set AIRFLOW__CORE__FERNET_KEY=$(python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())")
@@ -53,18 +69,10 @@ Generate a `AIRFLOW__WEBSERVER__SECRET_KEY`:
 openssl rand -base64 32 # head -c 32 /dev/random | base64
 ```
 
-Set in Heroku app:
+Set `AIRFLOW__WEBSERVER__SECRET_KEY` in Heroku app:
 
 ```sh
 heroku config:set AIRFLOW__WEBSERVER__SECRET_KEY=$(openssl rand -base64 32)
-```
-
-## Run
-
-Run an all-in-one copy of airflow locally:
-
-```sh
-airflow standalone
 ```
 
 ## Database
@@ -75,7 +83,7 @@ If you're seeing the error in the Heroku logs:
 ERROR: You need to initialize the database. Please run `airflow db init`.
 ```
 
-Then verify the config looks good before initializing the database in your Heroku app:
+Then verify the Airflow config looks good before initializing the database in your Heroku app:
 
 ```sh
 heroku run bash
@@ -85,14 +93,14 @@ airflow db init
 
 ## User
 
-Create a user in Heroku app:
+Create a user in the Heroku app:
 
 ```sh
 heroku run bash
 airflow users create -e EMAIL -f FIRSTNAME -l LASTNAME [-p PASSWORD] -r ROLE [--use-random-password] -u USERNAME
 ```
 
-Example to create an admin user:
+Here's an example on how to create an admin user:
 
 ```sh
 airflow users create \
