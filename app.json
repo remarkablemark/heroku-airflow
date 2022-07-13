@@ -57,5 +57,12 @@
   },
   "scripts": {
     "postdeploy": "airflow db init"
+  },
+  "environments": {
+    "review": {
+      "scripts": {
+        "postdeploy": "airflow db init && airflow users create -e admin@example.org -f FIRST_NAME -l LAST_NAME -p password -r Admin -u admin"
+      }
+    }
   }
 }
