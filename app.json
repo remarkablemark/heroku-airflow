@@ -21,17 +21,30 @@
       "value": "/app"
     },
     "AIRFLOW__WEBSERVER__BASE_URL": {
-      "description": "Base url of your website"
+      "description": "Base url of your website",
+      "value": "http://localhost:8080/"
+    },
+    "AIRFLOW__WEBSERVER__COOKIE_SAMESITE": {
+      "description": "Set samesite policy on session cookie",
+      "value": "Strict"
+    },
+    "AIRFLOW__WEBSERVER__COOKIE_SECURE": {
+      "description": "Set secure flag on session cookie",
+      "value": "True"
     },
     "AIRFLOW__WEBSERVER__SECRET_KEY": {
       "description": "Secret key used to run your flask app",
       "required": true
+    },
+    "AIRFLOW__WEBSERVER__WORKERS": {
+      "description": "Number of workers to run the Gunicorn web server",
+      "value": 2
     }
   },
   "formation": {
     "web": {
       "quantity": 1,
-      "size": "standard-2x"
+      "size": "hobby"
     },
     "worker": {
       "quantity": 1,
